@@ -1,0 +1,57 @@
+.. mge_downloader documentation master file, created by
+   sphinx-quickstart on Wed Sep  2 08:03:56 2020.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+mge_downloader documentation!
+==========================================
+
+This page provides a short introduction on how to use mge_downloader.
+
+Installation
+===========================================
+## Windows
+You will need to install Chrome, Chromedriver and Selenium
+- Install Chrome from
+[here](https://www.google.com/chrome/)
+- Install Chromedriver from
+[here](https://sites.google.com/a/chromium.org/chromedriver/downloads)
+- Install Python (3.7+) from
+[here](https://www.python.org/downloads/)
+- Install Selenium bindings through the command line
+`pip install selenium`
+
+
+##Linux
+###Debian
+```
+apt-get install
+```
+
+###ARCH
+```
+pacman -Syu
+pacman -S chromium python python-selenium
+```
+Chromediver can be installes through the AUR using `yay`
+
+```
+pacman -S yay
+yay -Syu
+yay -S chromedriver
+```
+
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

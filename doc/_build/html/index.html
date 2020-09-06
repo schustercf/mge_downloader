@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mge_downloader documentation! &#8212; mge_downloader 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="mge-downloader-documentation">
+<h1>mge_downloader documentation!<a class="headerlink" href="#mge-downloader-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Uploads FASTA files to <a class="reference external" href="https://cge.cbs.dtu.dk/services/MobileElementFinder/">https://cge.cbs.dtu.dk/services/MobileElementFinder/</a> and downloads the results.
+Uploads are staggered in order to prevent overloading of the server. Results are fetched after a certain
+wait time. The system uses Selenium, a browser control system. I chose this system as the uploads on the
+MEFinder website rely on Javascript queries nd can easily be controlled with selenium.
+All of this could probably be optimized. However, because only a few instances are run a the same time
+and the program is waiting most of the run-time, this would offer little advantage.</p>
+<p><em>Please adhere to the minimum time between requests in order to no overload the server.</em></p>
+</div>
+<div class="section" id="workflow">
+<h1>Workflow<a class="headerlink" href="#workflow" title="Permalink to this headline">¶</a></h1>
+<div class="graphviz"><img src="_images/graphviz-24fd9ac4296deb450828273ae8bc24ec5943a266.png" alt="digraph Waterfall {
+
+    subgraph cluster_0 {
+        node [shape=box]
+        color=red
+        label=&quot;FASTA #1&quot;
+        &quot;No Delay&quot; -&gt; &quot;Upload 1&quot;  -&gt; &quot;Wait&quot; -&gt; &quot;Download Result 1&quot;;
+    }
+
+    subgraph cluster_1 {
+        node [shape=box]
+        color=blue
+        label=&quot;FASTA #2&quot;
+        &quot;Delay&quot; -&gt; &quot;Upload 2&quot; -&gt; &quot;Wait &quot; -&gt; &quot;Download Result 2&quot;;
+    }
+
+
+    subgraph cluster_2 {
+        node [shape=box]
+        color=green
+        label=&quot;FASTA #3&quot;
+        &quot;Delay &quot; -&gt; &quot;Upload 3&quot; -&gt; &quot; Wait &quot; -&gt; &quot;Download Result 3&quot;;
+    }
+
+    subgraph cluster_3 {
+        node [shape=box]
+        &quot;Delay  &quot; -&gt; &quot;Upload(n)&quot;  -&gt; &quot;...&quot; -&gt; &quot;... &quot;;
+        label = &quot;FASTA(n)&quot;;
+        color=gray
+    }
+
+
+  edge[weight=0.1]
+  #edge [style=invis, weight=0.1];
+  #&quot;No Delay&quot;-&gt; &quot;Delay&quot;
+  #&quot;Delay&quot; -&gt; &quot;Delay &quot;
+  #&quot;Delay &quot; -&gt; &quot;Delay  &quot;
+  &quot;Upload 1&quot; -&gt; &quot;Delay&quot;
+  &quot;Upload 2&quot; -&gt; &quot;Delay &quot;
+  &quot;Upload 3&quot; -&gt; &quot;Delay  &quot;
+}" class="graphviz" /></div>
+</div>
+<div class="section" id="quick-usage">
+<h1>Quick Usage<a class="headerlink" href="#quick-usage" title="Permalink to this headline">¶</a></h1>
+<p>Upload all fasta files from current directory and download results:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python mge_downloader --outdir outdir *.fna
+</pre></div>
+</div>
+</div>
+<div class="section" id="detailed-usage">
+<h1>Detailed Usage<a class="headerlink" href="#detailed-usage" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python main.py --help
+<span class="o">=================</span> mgefinder <span class="m">0</span>.1.0 <span class="o">=================</span>
+usage: main.py <span class="o">[</span>-h<span class="o">]</span> --outdir directory <span class="o">[</span>--time-to-next minutes<span class="o">]</span> <span class="o">[</span>--time-to-fetch-result minutes<span class="o">]</span> fasta files<span class="o">)</span> <span class="o">[</span>fasta file<span class="o">(</span>s ...<span class="o">]</span>
+
+Upload fasta file to mefinder and download results.
+
+positional arguments:
+  fasta file<span class="o">(</span>s<span class="o">)</span>         fastA files.
+
+optional arguments:
+  -h, --help            show this <span class="nb">help</span> message and <span class="nb">exit</span>
+  --outdir directory    directory that should be used to place the output.
+  --time-to-next minutes
+                        Number of minutes to <span class="nb">wait</span> before sending next fasta file
+  --time-to-fetch-result minutes
+                        Number of minutes to <span class="nb">wait</span> before fetching the result
+
+Example: python mge_downloader.py --outdir dir1 *.fna
+</pre></div>
+</div>
+<div class="section" id="defaults">
+<h2>Defaults<a class="headerlink" href="#defaults" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>–time-to-next minutes: 5 min</p></li>
+<li><p>–time-to-fetch-result minutes: 30 min</p></li>
+</ul>
+</div>
+<div class="section" id="minimum-values">
+<h2>Minimum values<a class="headerlink" href="#minimum-values" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>–time-to-next minutes: 5 min</p></li>
+<li><p>–time-to-fetch-result minutes: 5 min</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="windows">
+<h2>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h2>
+<p>You will need to install Chrome, Chromedriver and Selenium</p>
+<ul class="simple">
+<li><p>Install Chrome from <a class="reference external" href="https://www.google.com/chrome/">https://www.google.com/chrome/</a></p></li>
+<li><p>Install Chromedriver from <a class="reference external" href="https://sites.google.com/a/chromium.org/chromedriver/downloads">https://sites.google.com/a/chromium.org/chromedriver/downloads</a></p></li>
+<li><p>Install Python (3.7+) from <a class="reference external" href="https://www.python.org/downloads/">https://www.python.org/downloads/</a></p></li>
+<li><p>Install Selenium bindings through the command line</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; pip install selenium
+</pre></div>
+</div>
+</div>
+<div class="section" id="linux">
+<h2>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="ubuntu">
+<h3>Ubuntu<a class="headerlink" href="#ubuntu" title="Permalink to this headline">¶</a></h3>
+<p>You will need to install Chrome, Chromedriver and Selenium.</p>
+<p>Follow these instructions: <a class="reference external" href="https://gist.github.com/ziadoz/3e8ab7e944d02fe872c3454d17af31a5">https://gist.github.com/ziadoz/3e8ab7e944d02fe872c3454d17af31a5</a></p>
+</div>
+<div class="section" id="arch">
+<h3>ARCH<a class="headerlink" href="#arch" title="Permalink to this headline">¶</a></h3>
+<p>You will need to install Chrome, Chromedriver and Selenium.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo pacman -Syu
+$ sudo pacman -S chromium python python-selenium
+</pre></div>
+</div>
+<p>Chromedriver can be installed through the AUR using <cite>yay</cite></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo pacman -S yay
+$ yay -Syu
+$ yay -S chromedriver
+</pre></div>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">mge_downloader</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Christopher Schuster.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

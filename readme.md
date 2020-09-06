@@ -74,6 +74,9 @@ Upload all fasta files from current directory and download results:
 $ python mge_downloader --outdir outdir *.fna
 ```
 
+## Example usage
+
+[![asciicast](https://asciinema.org/a/hec7dfVzDNPYLCcHxmkbaat1w.svg)](https://asciinema.org/a/hec7dfVzDNPYLCcHxmkbaat1w)
 
 ## Usage
 

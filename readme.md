@@ -1,6 +1,12 @@
 # MGE_downloader
 by Christopher Schuster
 
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/schustercf/mge_downloader)
+![GitHub issues](https://img.shields.io/github/issues/schustercf/mge_downloader)
+![Please Contribute](https://img.shields.io/badge/please-contribute-blueviolet)
+
 **This software is still in early testing. Do not run in production**
 
 MGE_downloader is tool that uploads FASTA files to the [mobile genetic element finder](https://cge.cbs.dtu.dk/services/MobileElementFinder/)

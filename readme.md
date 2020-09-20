@@ -28,8 +28,8 @@ You will need to install Chrome, Chromedriver and Selenium first.
 ### Windows Installation
 
 * [Install Chrome: https://www.google.com/chrome/](https://www.google.com/chrome/)
-* [Install Chromedriver:https://sites.google.com/a/chromium.org/chromedriver/downloads](https://sites.google.com/a/chromium.org/chromedriver/downloads)
-* [Install Python (3.7+): https://www.python.org/downloads/](https://www.python.org/downloads/)
+* [Download Chromedriver:https://sites.google.com/a/chromium.org/chromedriver/downloads](https://sites.google.com/a/chromium.org/chromedriver/downloads) and either place in the working directory where mge_downloader will be called or put it into the windows PATH.
+* Install Python (3.7+): from the Windows Store (preferred) or manually from [https://www.python.org/downloads/](https://www.python.org/downloads/)
 * Install Selenium bindings through the command line:
     `pip install selenium`
 

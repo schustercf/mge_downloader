@@ -2,21 +2,23 @@
 # -*- coding: utf-8 -*-
 
 """
- 29.08.2020
- Christopher Schuster
+ 17.02.2021
+ Christopher F. Schuster
  Uploads files to and results from MEFinder
  https://cge.cbs.dtu.dk/services/MobileElementFinder/
 
+ LICENSE: MIT
 """
 
-__version__ = "0.1.0"
-__author__ = "Christopher Schuster"
+__version__ = "0.1.1"
+__author__ = "Christopher F. Schuster"
 
 # standard library imports
 import argparse
 import asyncio
 from collections import defaultdict
 import datetime
+from glob import glob
 import json
 import os
 import pathlib
@@ -103,18 +105,6 @@ def update_json(run_id: int, base_dir: pathlib.Path, msg: str):
         return False
 
     return True
-
-
-'''
-# Future proofing
-def sanitize_search_string(search_str: str):
-    return''.join([c if c.isalnum() else '' for c in search_str])
-
-
-def filter_results_table_regex(search_str: str, result_table: str):
-    # search_str="(.*(?:ctx|inc).*)"
-    return '____\t'.join(re.findall(f"{search_str}", result_table, re.IGNORECASE + re.MULTILINE))
-'''
 
 
 def filter_results_table(search_str: str, result_table: str) -> str:
@@ -420,11 +410,11 @@ def check_args(args):
     else:
         os.mkdir(args.outdir)
 
-    fasta_files = [str(fp.absolute()) for fp in args.files]
+    args.files = [str(f) for fp in args.files for f in glob(str(fp.absolute()))]
 
     # Parameters
     print("PARAMETERS")
-    print(f"FASTAs: {', '.join(fasta_files)}")
+    print(f"FASTAs: {', '.join(args.files)}")
     print(f"outdir: {args.outdir}")
     print(f"time_to_fetch_result: {args.time_to_fetch_result} min")
     print(f"time_to_next: {args.time_to_next} min")
@@ -467,7 +457,7 @@ def main():
     clean_args = check_args(args)
     if not clean_args:
         return -1
-    fasta_files = [str(fp.absolute()) for fp in clean_args.files]
+    fasta_files = clean_args.files
     base_dir = clean_args.outdir
     estimate_completion(len(fasta_files), clean_args.time_to_next,  clean_args.time_to_fetch_result)
     search_filter = args.filter

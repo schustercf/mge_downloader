@@ -27,8 +27,8 @@ You will need to install Chrome, Chromedriver and Selenium first.
 
 ### Windows Installation
 
-* [Install Chrome: https://www.google.com/chrome/](https://www.google.com/chrome/)
-* [Download Chromedriver:https://sites.google.com/a/chromium.org/chromedriver/downloads](https://sites.google.com/a/chromium.org/chromedriver/downloads) and either place in the working directory where mge_downloader will be called or put it into the windows PATH.
+* Install Chrome: [https://www.google.com/chrome/](https://www.google.com/chrome/)
+* Download Chromedriver: [https://sites.google.com/a/chromium.org/chromedriver/downloads](https://sites.google.com/a/chromium.org/chromedriver/downloads) and either place in the working directory where mge_downloader will be called or put it into the windows PATH.
 * Install Python (3.7+): from the Windows Store (preferred) or manually from [https://www.python.org/downloads/](https://www.python.org/downloads/)
 * Install Selenium bindings through the command line:
     `pip install selenium`
@@ -108,6 +108,13 @@ $ python mge_downloader --outdir outdir *.fna
    Example: python mge_downloader.py --outdir dir1 *.fna
 
 ```
+
+## Output
+- _status.json_: log of up-/downloads
+- _urls.txt_: urls of mgefinder results
+- _urls.txt.html_: urls of mgefinder results as HTML file
+- _[input_fasta].html_: Original HTML file from mefinder
+- _[input_fasta].txt_: extracted table from HTML file
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

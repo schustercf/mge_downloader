@@ -116,7 +116,7 @@ def filter_results_table(search_str: str, result_table: str) -> str:
     :param result_table: str: results extracted from table
     :return: str. Tab concatenated lines that matched
     """
-    return "____\t".join([line for line in result_table.split("\n") if line.lower().find(search_str.lower()) >= 1])
+    return "____\t".join([line for line in result_table.split("\n") if line.lower().find(search_str.lower()) >= 0])
 
 
 def update_and_save_filtered_file(run_id: int, base_dir: pathlib.Path, fasta_filename: str,
